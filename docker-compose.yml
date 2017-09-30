@@ -1,0 +1,31 @@
+version: '3.1' 
+
+services:
+
+  hamaca:
+    image: rails_nginx
+    ports:
+      - "80:80"
+      - "3000:3001"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      PGPASSWORD: postgres  
+    depends_on:
+      - postgres    
+  
+  postgres:
+    image: postgres:9.6-alpine
+    build: .
+    volumes:
+      - hamaca-data:/var/lib/postgresql/data      
+    restart: always
+    
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    
+
+volumes:
+  hamaca-data:
+
